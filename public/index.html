@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dr Phone — Réparation smartphone à domicile, rapide & garantie</title>
+  <meta name="description" content="Réparation écran, batterie, connecteur, caméra… À domicile ou au bureau. Cambrai, Douai, Valenciennes, Lille & alentours. Intervention le jour‑même, garantie 6 mois.">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/assets/icon-192.png">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="/"><span class="dot">🔧</span> <span>Dr Phone</span></a>
+    <nav>
+      <a href="/diagnostic.html">Diagnostic</a>
+      <a href="/zones.html">Zones</a>
+      <a href="/contact.html">Devis</a>
+      <a href="#rdv">RDV</a>
+    </nav>
+    <div class="actions">
+      <a class="btn ghost" href="tel:033362020622">Appeler</a>
+      <a class="btn primary" href="#rdv">Prendre RDV</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap grid">
+      <div>
+        <h1>Réparation smartphone express — <b>chez vous</b> ou <b>au bureau</b></h1>
+        <p class="lead">Écran cassé, batterie KO, connecteur capricieux ? On intervient en <b>20–45 min</b>, pièces <b>premium</b>, <b>garantie 6 mois</b>.</p>
+        <div class="badges">
+          <span class="chip">Diagnostic gratuit</span>
+          <span class="chip">Données préservées</span>
+          <span class="chip">Déplacement rapide</span>
+        </div>
+        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn call" href="tel:033362020622">Appeler 03 62 02 06 22</a>
+          <a class="btn primary" href="/diagnostic.html">Diagnostic (2 min)</a>
+          <a class="btn ghost" href="/contact.html">Demander un devis</a>
+        </div>
+      </div>
+      <div>
+        <div class="issue-grid">
+          <button class="issue">Écran<span>Fissure, lignes, taches</span></button>
+          <button class="issue">Batterie<span>Autonomie faible</span></button>
+          <button class="issue">Connecteur<span>Charge instable</span></button>
+          <button class="issue">Caméra<span>Floue / HS</span></button>
+          <button class="issue">Audio<span>HP / Micro</span></button>
+          <button class="issue">Dos/Vitre<span>Cassé</span></button>
+        </div>
+        <form id="callme" class="panel" style="margin-top:12px">
+          <h3>Être rappelé en 5 min</h3>
+          <label>Nom*<input required name="name" placeholder="Prénom Nom"></label>
+          <label>Téléphone*<input required name="phone" inputmode="tel" placeholder="06 12 34 56 78"></label>
+          <button class="btn primary" type="submit">Me rappeler</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Services</h2>
+      <div class="cards">
+        <article class="card"><h3>Smartphones</h3><p>Écran (OLED/LCD), batterie, connecteur, caméra, dos en verre…</p></article>
+        <article class="card"><h3>Tablettes</h3><p>Vitre tactile, dalle, port de charge, boutons, audio…</p></article>
+        <article class="card"><h3>Consoles</h3><p>USB‑C, Joy‑Con drift, écran, batterie, nettoyage pro…</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section soft">
+    <div class="wrap">
+      <h2>Comment ça se passe</h2>
+      <div class="steps">
+        <div class="step"><span>1</span><b>Devis express</b><p>Modèle + panne → prix clair.</p></div>
+        <div class="step"><span>2</span><b>Déplacement</b><p>Chez vous ou au bureau, selon stock.</p></div>
+        <div class="step"><span>3</span><b>Réparation</b><p>20–45 min. Tests devant vous. Garantie 6 mois.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="rdv" class="section">
+    <div class="wrap">
+      <h2>Prendre un rendez‑vous</h2>
+      <form id="booking" class="panel">
+        <div class="grid" style="grid-template-columns:repeat(2,1fr)">
+          <label>Prénom*<input required name="first"></label>
+          <label>Nom*<input required name="last"></label>
+          <label>Téléphone*<input required name="tel" inputmode="tel"></label>
+          <label>Email<input type="email" name="email"></label>
+          <label>Ville*<input required name="city"></label>
+          <label>Modèle*<input required name="model" placeholder="Ex : iPhone 13"></label>
+        </div>
+        <label>Date*<input required type="date" name="date"></label>
+        <label>Créneau (30 min)*
+          <select required name="slot"><option value="">Choisir…</option></select>
+        </label>
+        <label>Panne (description)*<textarea required name="issue" rows="3" placeholder="Écran fissuré, batterie faible…"></textarea></label>
+        <label><input type="checkbox" required> J’accepte d’être recontacté·e.</label>
+        <button class="btn primary" type="submit">Valider le RDV</button>
+        <p class="lead">Horaires : Lun–Ven 8h–19h • Sam 8h–20h • Dim 10h–20h — 3 RDV maximum par créneau.</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Marques réparées</h2>
+      <div class="logos">
+        <img alt="Apple" src="/assets/brands/apple.svg">
+        <img alt="Samsung" src="/assets/brands/samsung.svg">
+        <img alt="Xiaomi" src="/assets/brands/xiaomi.svg">
+        <img alt="Huawei" src="/assets/brands/huawei.svg">
+        <img alt="Google" src="/assets/brands/google.svg">
+        <img alt="Sony" src="/assets/brands/sony.svg">
+        <img alt="OnePlus" src="/assets/brands/oneplus.svg">
+        <img alt="Oppo" src="/assets/brands/oppo.svg">
+        <img alt="Honor" src="/assets/brands/honor.svg">
+        <img alt="Motorola" src="/assets/brands/motorola.svg">
+        <img alt="Realme" src="/assets/brands/realme.svg">
+        <img alt="Nokia" src="/assets/brands/nokia.svg">
+        <img alt="Wiko" src="/assets/brands/wiko.svg">
+        <img alt="Nothing" src="/assets/brands/nothing.svg">
+        <img alt="Asus" src="/assets/brands/asus.svg">
+        <img alt="Lenovo" src="/assets/brands/lenovo.svg">
+        <img alt="LG" src="/assets/brands/lg.svg">
+        <img alt="HTC" src="/assets/brands/htc.svg">
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <b>Dr Phone</b>
+        <p>4T rue Guillaume du Fay, 59400 Cambrai</p>
+        <p><a href="tel:033362020622">03 62 02 06 22</a> — <a href="mailto:drphonenord@gmail.com">drphonenord@gmail.com</a></p>
+        <p>Horaires : Lun–Ven 8h–19h • Sam 8h–20h • Dim 10h–20h</p>
+      </div>
+      <div>
+        <b>Navigation</b>
+        <ul>
+          <li><a href="/diagnostic.html">Diagnostic</a></li>
+          <li><a href="/zones.html">Zones d’intervention</a></li>
+          <li><a href="/contact.html">Demander un devis</a></li>
+        </ul>
+      </div>
+      <div>
+        <b>Mentions & CGV</b>
+        <ul>
+          <li>SIREN 898 575 147</li>
+          <li><a href="#">Mentions légales</a></li>
+          <li><a href="#">CGV</a></li>
+        </ul>
+      </div>
+    </div>
+    <p style="opacity:.7;margin-top:10px">© 2025 Dr Phone</p>
+  </div>
+</footer>
+
+<script src="/assets/js/app.js"></script>
+</body>
+</html>

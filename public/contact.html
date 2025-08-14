@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact & Devis — Dr Phone</title>
+  <meta name="description" content="Contact & devis — réponse rapide. Indiquez votre modèle, ville et panne.">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/assets/icon-192.png">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="/"><span class="dot">🔧</span> <span>Dr Phone</span></a>
+    <nav>
+      <a href="/diagnostic.html">Diagnostic</a>
+      <a href="/zones.html">Zones</a>
+      <a href="/contact.html">Devis</a>
+      <a href="/#rdv">RDV</a>
+    </nav>
+    <div class="actions">
+      <a class="btn call" href="tel:033362020622">Appeler</a>
+      <a class="btn primary" href="#devis">Demander un devis</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap grid">
+      <div>
+        <h1>Contact & devis</h1>
+        <p class="lead">Réponse rapide. Donnez votre <b>modèle</b>, votre <b>ville</b> et la <b>panne</b>.</p>
+        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn call" href="tel:033362020622">Appeler 03 62 02 06 22</a>
+          <a class="btn ghost" href="mailto:drphonenord@gmail.com">Écrire par e‑mail</a>
+        </div>
+      </div>
+      <div>
+        <form id="devis" class="panel">
+          <h3>Demande de devis</h3>
+          <div class="grid" style="grid-template-columns:repeat(2,1fr)">
+            <label>Prénom*<input required name="first"></label>
+            <label>Nom*<input required name="last"></label>
+            <label>Téléphone*<input required name="tel" inputmode="tel"></label>
+            <label>Email<input type="email" name="email"></label>
+            <label>Ville*<input required name="city"></label>
+            <label>Modèle*<input required name="model" placeholder="Ex : iPhone 13"></label>
+          </div>
+          <label>Panne (détails)*<textarea required name="issue" rows="4"></textarea></label>
+          <label><input type="checkbox" required> J’accepte d’être recontacté·e pour ma demande.</label>
+          <button class="btn primary" type="submit">Envoyer</button>
+          <p class="lead">Nous vous rappelons vite pour confirmer la réparation.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <b>Dr Phone</b>
+        <p>4T rue Guillaume du Fay, 59400 Cambrai</p>
+        <p><a href="tel:033362020622">03 62 02 06 22</a> — <a href="mailto:drphonenord@gmail.com">drphonenord@gmail.com</a></p>
+      </div>
+      <div>
+        <b>Navigation</b>
+        <ul>
+          <li><a href="/">Accueil</a></li>
+          <li><a href="/diagnostic.html">Diagnostic</a></li>
+          <li><a href="/zones.html">Zones d’intervention</a></li>
+        </ul>
+      </div>
+      <div>
+        <b>Mentions & CGV</b>
+        <ul>
+          <li>SIREN 898 575 147</li>
+          <li><a href="#">Mentions légales</a></li>
+          <li><a href="#">CGV</a></li>
+        </ul>
+      </div>
+    </div>
+    <p style="opacity:.7;margin-top:10px">© 2025 Dr Phone</p>
+  </div>
+</footer>
+
+<script src="/assets/js/app.js"></script>
+<script>
+document.getElementById('devis')?.addEventListener('submit', (e)=>{
+  e.preventDefault();
+  alert('Votre demande de devis a été envoyée. Nous vous rappelons rapidement.');
+  e.target.reset();
+});
+</script>
+</body>
+</html>

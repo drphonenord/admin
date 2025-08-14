@@ -1,0 +1,22 @@
+{
+  "name": "drphone-neon",
+  "version": "1.0.0",
+  "description": "Dr Phone - Site neon + RDV API (3 par cr\u00e9neau) + Page Diagnostic + PWA + Admin",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-session": "^1.17.3",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "uuid": "^9.0.1",
+    "pdfkit": "^0.15.0",
+    "nodemailer": "^6.9.13"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}

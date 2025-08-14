@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin — Tous les devis</title>
+  <link rel="stylesheet" href="/assets/admin.css">
+  <style>
+  .wrap{max-width:1100px;margin:0 auto;padding:24px}
+  .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .tabs a{margin-right:12px;text-decoration:none;font-weight:800;opacity:.8}
+  .tabs a.active{opacity:1;text-decoration:underline}
+  table{width:100%;border-collapse:collapse;background:#0a0d14;border-radius:12px;overflow:hidden}
+  th,td{padding:10px;border-bottom:1px solid rgba(0,245,255,.12);text-align:left}
+  thead th{position:sticky;top:0;background:#0a0d14;cursor:pointer}
+  .badge.new{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;border:1px solid rgba(255,99,132,.4);background:rgba(255,99,132,.1);color:#ff9bb0;font-weight:700;font-size:.8rem}
+  .tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+  input[type="search"], input[type="date"]{padding:10px;border-radius:10px;border:1px solid rgba(0,245,255,.25);background:#0a0d14;color:#c3eafe}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;border:1px solid rgba(0,245,255,.25);background:#0a0d14;color:#aef4ff;font-weight:800;cursor:pointer}
+  .btn.primary{background:#001b22;border-color:#00f5ff}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <h1 style="margin:0">Tous les devis</h1>
+      <div class="tabs">
+        <a href="/admin" >Tableau RDV</a>
+        <a href="/admin/quotes.html" class="active">Tous les devis</a>
+      </div>
+    </div>
+
+    <div class="tools">
+      <input id="q" type="search" placeholder="Rechercher (nom, modèle, tel, email, ville, description)">
+      <input id="from" type="date">
+      <input id="to" type="date">
+      <a class="btn" id="markAll">Tout marquer comme lu</a>
+      <a class="btn primary" href="/admin/quotes.csv" target="_blank">Exporter CSV</a>
+    </div>
+
+    <div id="table"></div>
+  </div>
+
+<script>
+let DATA = { quotes: [] }; let SORT = {key:'date', dir:'desc'};
+
+async function load(){
+  const r = await fetch('/admin/data'); DATA = await r.json(); render();
+}
+function render(){
+  const q = (document.getElementById('q').value||'').toLowerCase().trim();
+  const dfrom = document.getElementById('from').value||'';
+  const dto = document.getElementById('to').value||'';
+  let rows = (DATA.quotes||[]).slice();
+
+  if(dfrom){ rows = rows.filter(x=> (x.createdAt||'') >= dfrom); }
+  if(dto){ rows = rows.filter(x=> (x.createdAt||'') <= dto + 'T23:59'); }
+
+  if(q){
+    rows = rows.filter(x=>{
+      const blob = `${x.first||''} ${x.last||''} ${x.tel||''} ${x.email||''} ${x.city||''} ${x.model||''} ${x.issue||''} ${x.id||''}`.toLowerCase();
+      return blob.includes(q);
+    });
+  }
+
+  function key(x){
+    if(SORT.key==='name') return `${x.last||''} ${x.first||''}`.toLowerCase();
+    if(SORT.key==='model') return (x.model||'').toLowerCase();
+    if(SORT.key==='city') return (x.city||'').toLowerCase();
+    return x.createdAt || '';
+  }
+  rows.sort((a,b)=> (key(a) > key(b) ? 1 : -1) * (SORT.dir==='asc'?1:-1));
+
+  const thead = `
+    <thead><tr>
+      <th data-k="date">Date</th>
+      <th data-k="name">Client</th>
+      <th data-k="model">Modèle</th>
+      <th>Description</th>
+      <th data-k="city">Ville</th>
+      <th>Actions</th>
+    </tr></thead>`;
+  const tbody = `<tbody>${
+    rows.map(x=>`
+      <tr>
+        <td>${(x.createdAt||'').replace('T',' ').slice(0,16)} ${!x.viewed?'<span class="badge new">Nouveau</span>':''}</td>
+        <td><b>${x.first||''} ${x.last||''}</b><br><span style="opacity:.8">${x.tel||''} • ${x.email||''}</span></td>
+        <td>${x.model||''}</td>
+        <td>${x.issue||''}</td>
+        <td>${x.city||''}</td>
+        <td>
+          <button class="btn" data-id="${x.id}" data-act="mark">Marquer lu</button>
+        </td>
+      </tr>
+    `).join('')
+  }</tbody>`;
+  document.getElementById('table').innerHTML = `<table>${thead}${tbody}</table>`;
+
+  // sorting
+  document.querySelectorAll('th[data-k]').forEach(th=> th.addEventListener('click', ()=>{
+    const k = th.getAttribute('data-k');
+    SORT.dir = (SORT.key===k && SORT.dir==='asc') ? 'desc' : 'asc';
+    SORT.key = k; render();
+  }));
+
+  // mark viewed
+  document.querySelectorAll('button[data-act="mark"]').forEach(b=> b.addEventListener('click', async ()=>{
+    await fetch('/admin/mark-viewed', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ id: b.getAttribute('data-id'), kind:'quote' }) });
+    load();
+  }));
+
+  document.getElementById('markAll').onclick = async ()=>{
+    const ids = rows.filter(x=> !x.viewed).map(x=> x.id);
+    await Promise.all(ids.map(id=> fetch('/admin/mark-viewed', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ id, kind:'quote' }) })));
+    load();
+  };
+}
+load();
+['q','from','to'].forEach(id=> document.getElementById(id).addEventListener('input', render));
+</script>
+</body>
+</html>

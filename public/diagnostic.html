@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Diagnostic — Dr Phone</title>
+  <meta name="description" content="Diagnostic complet de votre panne : écran, batterie, connecteur, caméra, audio, réseau, carte mère, oxydation. Toutes marques.">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/assets/icon-192.png">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="/"><span class="dot">🔧</span> <span>Dr Phone</span></a>
+    <nav>
+      <a href="/diagnostic.html">Diagnostic</a>
+      <a href="/zones.html">Zones</a>
+      <a href="/contact.html">Devis</a>
+      <a href="/#rdv">RDV</a>
+    </nav>
+    <div class="actions">
+      <a class="btn call" href="tel:033362020622">Appeler</a>
+      <a class="btn primary" href="/contact.html">Demander un devis</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <h1>Diagnostic panne — <b>gratuit</b> & <b>immédiat</b></h1>
+      <p class="lead">Choisissez votre <b>marque</b>, <b>modèle</b> et <b>problème</b>. Aucun prix affiché ici : <b>appelez‑nous</b> pour un tarif ferme et une intervention rapide.</p>
+      <form id="diag-form" class="panel" style="margin-top:14px">
+        <div class="grid" style="grid-template-columns:repeat(3,1fr)">
+          <label>Marque
+            <select name="brand">
+              <option>Apple</option><option>Samsung</option><option>Huawei</option><option>Xiaomi</option><option>Oppo</option><option>OnePlus</option><option>Google</option><option>Sony</option><option>Motorola</option><option>Honor</option><option>Realme</option><option>Nokia</option><option>Wiko</option><option>Nothing</option><option>Asus</option><option>Lenovo</option><option>LG</option><option>HTC</option><option>Vivo</option><option>BlackBerry</option><option>Alcatel</option>
+            </select>
+          </label>
+          <label>Modèle
+            <input name="model" placeholder="Ex : iPhone 13 / Galaxy S21">
+          </label>
+          <label>Problème
+            <select name="issue">
+              <option>Écran cassé / lignes</option>
+              <option>Batterie qui se vide vite</option>
+              <option>Ne charge plus / connecteur</option>
+              <option>Caméra floue / HS</option>
+              <option>Haut‑parleur / micro</option>
+              <option>Boutons (power/volume)</option>
+              <option>Réseau / Wi‑Fi / Bluetooth</option>
+              <option>Oxydation / liquide</option>
+              <option>Carte mère (diagnostic avancé)</option>
+              <option>Autre (préciser)</option>
+            </select>
+          </label>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+          <a class="btn call" href="tel:033362020622">Appeler 03 62 02 06 22</a>
+          <a class="btn primary" href="/contact.html">Demander un devis</a>
+        </div>
+        <label style="margin-top:10px">Lien partageable
+          <input id="share-link" readonly value="">
+        </label>
+      </form>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Problèmes courants</h2>
+      <div class="cards">
+        <article class="card"><h3>Écran</h3><p>Fissures, taches, lignes, tactile capricieux… remplacement dalle OLED/LCD selon modèle.</p></article>
+        <article class="card"><h3>Batterie</h3><p>Autonomie faible, extinction subite, gonflement. Batterie neuve avec tests.</p></article>
+        <article class="card"><h3>Connecteur</h3><p>Charge lente, câble qui “bouge”, port usé/oxydé. Nettoyage ou remplacement.</p></article>
+        <article class="card"><h3>Caméra</h3><p>Focus HS, images floues, capteur qui tremble. Module caméra et lentille.</p></article>
+        <article class="card"><h3>Audio</h3><p>Haut‑parleur étouffé, micro qui grésille, son bas. Grille + module.</p></article>
+        <article class="card"><h3>Carte mère</h3><p>Pas d’allumage, boucles, bootloops. Diagnostic avancé.</p></article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <b>Dr Phone</b>
+        <p>4T rue Guillaume du Fay, 59400 Cambrai</p>
+        <p><a href="tel:033362020622">03 62 02 06 22</a> — <a href="mailto:drphonenord@gmail.com">drphonenord@gmail.com</a></p>
+      </div>
+      <div>
+        <b>Navigation</b>
+        <ul>
+          <li><a href="/">Accueil</a></li>
+          <li><a href="/zones.html">Zones d’intervention</a></li>
+          <li><a href="/contact.html">Demander un devis</a></li>
+        </ul>
+      </div>
+      <div>
+        <b>Mentions & CGV</b>
+        <ul>
+          <li>SIREN 898 575 147</li>
+          <li><a href="#">Mentions légales</a></li>
+          <li><a href="#">CGV</a></li>
+        </ul>
+      </div>
+    </div>
+    <p style="opacity:.7;margin-top:10px">© 2025 Dr Phone</p>
+  </div>
+</footer>
+
+<script src="/assets/js/app.js"></script>
+</body>
+</html>

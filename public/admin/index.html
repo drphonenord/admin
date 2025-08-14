@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin — RDV</title>
+<link rel="stylesheet" href="/assets/css/style.css"><style>
+/* admin extra styles */
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:.85rem}
+.badge.todo{background:rgba(255,200,0,.15);border:1px solid rgba(255,200,0,.35);color:#ffe08a}
+.badge.doing{background:rgba(0,245,255,.12);border:1px solid rgba(0,245,255,.35);color:#aef4ff}
+.badge.done{background:rgba(0,255,149,.12);border:1px solid rgba(0,255,149,.35);color:#8fffd1}
+.badge.cancel{background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.35);color:#ffaaaa}
+.saved{font-size:.85rem;opacity:.7;margin-left:8px}
+th{cursor:pointer}
+</style><style>
+.cards-wrap .card{background:#0a0d14;border:1px solid rgba(0,245,255,.18);padding:16px;border-radius:16px;box-shadow:0 0 16px rgba(0,245,255,.10)}
+.cards-wrap h3{margin:0 0 4px;color:#aef4ff}
+#list table{background:#0a0d14;border-radius:12px}
+#list th, #list td{padding:10px 8px}
+#list thead th{position:sticky;top:0;background:#0a0d14}
+.panel{background:#0a0d14}
+</style></head><body>
+<div class="wrap" style="padding:40px 0">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h1>Tableau de bord RDV</h1>
+    <a class="btn ghost" href="/admin/logout">Se déconnecter</a>
+  </div>
+  <div class="panel" style="position:sticky;top:64px;z-index:5;margin-top:12px;border:1px solid rgba(0,245,255,.25)">
+  <div id="cards" class="cards-wrap" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+    <div class="card"><h3>Total</h3><div id="kpi-total" style="font-size:28px;font-weight:800">0</div></div>
+    <div class="card"><h3>En cours</h3><div id="kpi-doing" style="font-size:28px;font-weight:800">0</div></div>
+    <div class="card"><h3>Fait</h3><div id="kpi-done" style="font-size:28px;font-weight:800">0</div></div>
+    <div class="card"><h3>Impayés</h3><div id="kpi-unpaid" style="font-size:28px;font-weight:800">0</div></div>
+  </div>
+</div>
+<div class="panel" style="margin-top:12px">
+  <h2>Nouveau dossier (création manuelle)</h2>
+  <form method="post" action="/admin/create" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+    <input name="first" placeholder="Prénom" required>
+    <input name="last" placeholder="Nom" required>
+    <input name="tel" placeholder="Téléphone" required>
+    <input name="email" placeholder="Email">
+    <input name="city" placeholder="Ville" required>
+    <input name="model" placeholder="Modèle (ex: iPhone 13)" required>
+    <input name="date" placeholder="Date (YYYY-MM-DD)">
+    <input name="time" placeholder="Heure (HH:MM)">
+    <input name="issue" placeholder="Panne (court)">
+    <input name="imei" placeholder="IMEI / n° série">
+    <input name="passcode" placeholder="Code / Schéma (si donné)">
+    <input name="accessories" placeholder="Accessoires confiés (coque, SIM, microSD...)">
+    <input name="intake" placeholder="État à la réception">
+    <input name="payAmount" placeholder="Montant (ex: 89€)">
+    <input name="payMethod" placeholder="Mode (CB/espèces/virement)">
+    <label><input type="checkbox" name="payPaid"> Payé</label>
+    <label><input type="checkbox" name="powerOn"> Appareil s’allume</label>
+    <label><input type="checkbox" name="sim"> Carte SIM</label>
+    <label><input type="checkbox" name="microsd"> Carte microSD</label>
+    <label><input type="checkbox" name="faceid"> Face ID OK</label>
+    <label><input type="checkbox" name="touchid"> Touch ID OK</label>
+    <label><input type="checkbox" name="trueTone"> True Tone OK</label>
+    <label><input type="checkbox" name="photosMade"> Photos d’état prises</label>
+    <div style="grid-column:1/-1;display:flex;gap:10px"><button class="btn primary" type="submit">Créer le dossier</button></div>
+  </form>
+</div>
+<div class="panel" style="position:sticky;top:64px;z-index:5;margin-top:12px;border:1px solid rgba(0,245,255,.25)">
+  <div id="cards" class="cards-wrap" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+    <div class="card"><h3>Total</h3><div id="kpi-total" style="font-size:28px;font-weight:800">0</div></div>
+    <div class="card"><h3>En cours</h3><div id="kpi-doing" style="font-size:28px;font-weight:800">0</div></div>
+    <div class="card"><h3>Fait</h3><div id="kpi-done" style="font-size:28px;font-weight:800">0</div></div>
+    <div class="card"><h3>Impayés</h3><div id="kpi-unpaid" style="font-size:28px;font-weight:800">0</div></div>
+  </div>
+</div>
+<div class="panel" style="margin-top:12px">
+  <h2>Historique & recherche</h2>
+  <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px">
+    <input id="q" placeholder="Rechercher (nom, ville, modèle, #DRP, tel, email, ID...)">
+    <input id="from" type="date" placeholder="Du">
+    <input id="to" type="date" placeholder="Au">
+  </div>
+</div>
+<div id="list" class="panel" style="margin-top:12px"></div>
+</div>
+<script>
+async function load(){
+  const r = await fetch('/admin/data'); const j = await r.json();
+  const list = document.getElementById('list');
+  if(!j.rdv.length){ list.innerHTML = '<p>Aucun RDV.</p>'; return; }
+  
+
+const rows = j.rdv.sort((a,b)=> (a.date+a.time).localeCompare(b.date+b.time)).map(x=>`
+  <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr 1.1fr 1.8fr;gap:10px;padding:10px;border-bottom:1px solid rgba(0,245,255,.15)">
+    <div><b>#DRP-${x.number||'—'}</b><br><b>${x.first} ${x.last}</b><br><span style="opacity:.8">${x.tel} • ${x.email||''}</span></div>
+    <div>${x.city}</div>
+    <div>${x.model}</div>
+    <div>${x.date||'-'} ${x.time||''}</div>
+    <div>
+      <form method="post" action="/admin/update" style="display:flex;flex-direction:column;gap:6px">
+        <input type="hidden" name="id" value="${x.id}">
+        <input name="imei" placeholder="IMEI / n° série" value="${x.imei||''}">
+        <input name="passcode" placeholder="Code / Schéma" value="${x.passcode||''}">
+        <input name="accessories" placeholder="Accessoires confiés" value="${x.accessories||''}">
+        <input name="intake" placeholder="État à la réception" value="${x.intake||''}">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+          <label><input type="checkbox" name="powerOn" ${x.checks&&x.checks.powerOn?'checked':''}> S’allume</label>
+          <label><input type="checkbox" name="sim" ${x.checks&&x.checks.sim?'checked':''}> SIM</label>
+          <label><input type="checkbox" name="microsd" ${x.checks&&x.checks.microsd?'checked':''}> microSD</label>
+          <label><input type="checkbox" name="faceid" ${x.checks&&x.checks.faceid?'checked':''}> Face ID</label>
+          <label><input type="checkbox" name="touchid" ${x.checks&&x.checks.touchid?'checked':''}> Touch ID</label>
+          <label><input type="checkbox" name="trueTone" ${x.checks&&x.checks.trueTone?'checked':''}> True Tone</label>
+          <label><input type="checkbox" name="photosMade" ${x.checks&&x.checks.photosMade?'checked':''}> Photos prises</label>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:6px"><input name="payAmount" placeholder="Montant" value="${(x.payment&&x.payment.amount)||''}"><input name="payMethod" placeholder="Mode" value="${(x.payment&&x.payment.method)||''}"><label style="display:flex;align-items:center;gap:6px"><input type="checkbox" name="payPaid" ${(x.payment&&x.payment.paid)?'checked':''}> Payé</label></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" type="submit">Enregistrer</button>
+          <a class="btn ghost" target="_blank" href="/admin/bon/${x.id}.pdf">Bon (PDF)</a>
+          <form method="post" action="/admin/delete" onsubmit="return confirm('Supprimer ce RDV ?')">
+            <input type="hidden" name="id" value="${x.id}"><button class="btn ghost" type="submit">Supprimer</button>
+          </form>
+        </div>
+      </form>
+    </div>
+  </div>`).join('');
+
+
+  list.innerHTML = rows; document.querySelectorAll('[data-id]').forEach(()=>{});
+}
+load();
+</script>
+</body></html>
