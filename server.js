@@ -84,7 +84,7 @@ app.get('/api/slots', (req,res)=>{
 });
 
 // API: create booking
-app.post('/api/rdv', (req,res)=>{
+app.post('/api/rdv', async (req,res)=>{
   const { first, last, tel, email, city, model, date, time, issue } = req.body;
   if(!first || !last || !tel || !city || !model || !date || !time || !issue){
     return res.status(400).json({ error: 'Champs requis manquants' });
@@ -140,7 +140,7 @@ app.post('/api/quote', async (req,res)=>{
 
 // --- Admin ---
 // Admin create dossier
-app.post('/admin/create', requireAdmin, (req,res)=>{
+app.post('/admin/create', requireAdmin, async (req,res)=>{
   const { first,last,tel,email,city,model,date,time,issue, imei, intake, passcode, accessories,
     powerOn, sim, microsd, faceid, touchid, trueTone, photosMade, payAmount, payMethod, payPaid } = req.body;
   const id = uuidv4();
@@ -205,7 +205,7 @@ app.post('/admin/update', requireAdmin, (req,res)=>{
 });
 
 // JSON update (autosave)
-app.post('/admin/update.json', requireAdmin, (req,res)=>{
+app.post('/admin/update.json', requireAdmin, async (req,res)=>{
   const { id } = req.body;
   if(!id) return res.status(400).json({ error: 'id requis' });
   const data = loadData();
