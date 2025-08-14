@@ -394,3 +394,6 @@ app.get('/admin/bon/:id.pdf', requireAdmin, (req,res)=>{
 app.get('*', (req,res)=> res.sendFile(path.join(__dirname, 'public', 'index.html')));
 
 app.listen(PORT, ()=> console.log(`✅ Dr Phone server running on http://localhost:${PORT}`));
+
+// Health check for Render
+app.get('/health', (req,res)=> res.json({ ok:true, time:new Date().toISOString() }));
